@@ -34,7 +34,7 @@ struct AllTab: View {
                             TaskList(filteredTasks: .constant(taskStore.tasks))
                         }
                     }
-                    .background(Color.white) // Apply background color here if necessary
+                    .background(Color.white) 
                 }
                 .navigationBarTitle("")
                 .toolbar {

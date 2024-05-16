@@ -43,7 +43,6 @@ struct TaskListItem: View {
               Image(systemName: task.isCompleted ? "checkmark.square" : "square")
                 .foregroundColor(task.isCompleted ? .green : .red)
             }
-           // .frame(width: 75)
             .buttonStyle(PlainButtonStyle())
           }
 
