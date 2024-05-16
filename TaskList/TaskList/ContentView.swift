@@ -1,58 +1,37 @@
-//
-//  ContentView.swift
-//  Task List
-//
-//  Created by Nick Ryan on 4/20/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var taskStore = TaskStore()
+    @EnvironmentObject var taskStore: TaskStore
     @State private var isPresented = false
-    
+    @State var selectedCategory: String? = nil
+  @State var searchText = ""
+
     var body: some View {
-        NavigationView {
-            NavigationStack {
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        Text("My Tasks")
-                            .font(.largeTitle)
-                            .fontWeight(.heavy)
-                            .multilineTextAlignment(.leading)
-                            .padding(.trailing)
-                        
-                        ForEach(taskStore.tasks, id: \.self) { task in
-                            NavigationLink(destination: TaskDetail(taskStore: taskStore, task: task)) {
-                                TaskRow(taskStore: taskStore, task: task)
-                            }
-                            Divider()
-                        }
-                    }
-                    .padding(.horizontal)
-                    .sheet(isPresented: $isPresented) {
-                        AddTaskMenu(taskStore: taskStore, isPresented: $isPresented)
-                    }
-                    .padding(.top)
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
-                }
+        TabView {
+          AllTab(isPresented: $isPresented, selectedCategory: $selectedCategory)
+            .tabItem {
+              Image(systemName: "tray.full")
+              Text("All")
             }
-            .padding(.leading)
-            
+            IncompleteTab(isPresented: $isPresented)
+                .tabItem {
+                    Image(systemName: "list.bullet.circle")
+                    Text("Tasks")
+                }
+            CompletedTab(isPresented: $isPresented)
+                .tabItem {
+                    Image(systemName: "checkmark.circle")
+                    Text("Completed")
+                }
+          
         }
-      HStack {
-        Button(action: { isPresented.toggle() }) {
-          Image(systemName: "plus.circle.fill")
-          Text("New Task")
-            .fontWeight(.bold)
-        }
-        .padding()
-        Spacer()
-      }
+        .ignoresSafeArea()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(TaskStore())
+    }
 }
