@@ -9,41 +9,28 @@ import SwiftUI
 
 struct TaskDetail: View {
   @EnvironmentObject var taskStore: TaskStore
-  @Environment(\.presentationMode) var presentationMode
   @Binding var task: Task
 
-  
   var body: some View {
-    
-    NavigationView {
-      var _: Bool
-      Form {
-        Section(header: Text("Title")) {
-          Text(task.title)
-        }
-        Section(header: Text("Notes")) {
-          Text(task.notes)
-        }
-        Section(header: Text("Category")) {
-          Text(task.selectedCategory)
-        }
-        Toggle(isOn: $task.isCompleted) {
-          Text("Completed")
-        }
-        .onChange(of: task.isCompleted, initial: false) {
-          taskStore.toggleTaskCompletion(taskID: task.id)
-}
+    Form {
+      Section("Title") {
+        Text(task.title)
       }
-      .navigationTitle("Task Detail")
+      Section("Notes") {
+        Text(task.notes)
+      }
+      Section("Category") {
+        Text(task.selectedCategory)
+      }
+      Toggle("Completed", isOn: $task.isCompleted)
+        .onChange(of: task.isCompleted) {
+          taskStore.toggleTaskCompletion(taskID: task.id)
+        }
     }
-    Button("Dismiss") {
-      presentationMode.wrappedValue.dismiss()
-    }
+    .navigationTitle("Task Detail")
   }
 }
 
 #Preview {
   TaskDetail(task: .constant(Task(id: UUID(), title: "Example", isCompleted: false, notes: "", selectedCategory: "")))
 }
-
-

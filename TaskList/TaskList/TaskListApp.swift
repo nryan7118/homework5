@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct Task_ListApp: App {
-  
+  @StateObject var store = TaskStore()
+
   var body: some Scene {
     WindowGroup {
       ContentView()
-        .environmentObject(TaskStore())
-      
+        .environmentObject(store)
     }
   }
 }

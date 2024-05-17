@@ -8,39 +8,62 @@
 import SwiftUI
 
 struct IncompleteTab: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @Binding var isPresented: Bool
-    @State private var filteredTasks: [Task] = []
+  @EnvironmentObject var taskStore: TaskStore
+  @State var tasks: [Task] = []
 
-    var body: some View {
-        NavigationView {
-            VStack {
-                TaskList(filteredTasks: $filteredTasks)
-                    .onAppear {
-                        filteredTasks = taskStore.tasks.filter { !$0.isCompleted }
-                    }
-                    .listStyle(GroupedListStyle())
-                    .toolbar {
-                        ToolbarItem(placement: .bottomBar) {
-                            Button(action: { isPresented.toggle() }) {
-                                Image(systemName: "plus.circle.fill")
-                                Text("New Task").fontWeight(.bold)
-                            }
-                        }
-                    }
-                    .sheet(isPresented: $isPresented) {
-                        AddTaskMenu(isPresented: $isPresented)
-                    }
-            }
-            .navigationTitle("Incomplete Tasks")
+  var incompleteTasks: [Task] {
+    taskStore.tasks.filter { $0.isCompleted == false }
+  }
+
+  var body: some View {
+    NavigationStack {
+      TaskList(tasks: $tasks)
+        .listStyle(.grouped)
+        .toolbar {
+          ToolbarItem(placement: .primaryAction) {
+            AddTaskButton()
+          }
         }
+        .onAppear {
+          tasks = incompleteTasks
+        }
+        .onChange(of: incompleteTasks) { _, incompleteTasks in
+          tasks = incompleteTasks
+        }
+        .navigationTitle("Incomplete Tasks")
     }
+  }
 }
 
-struct IncompleteTab_Previews: PreviewProvider {
-    static var previews: some View {
-        let taskStore = TaskStore()
-        return IncompleteTab(isPresented: .constant(false))
-            .environmentObject(taskStore)
+#Preview {
+  IncompleteTab(
+    tasks: [
+      Task(
+        id: UUID(),
+        title: "",
+        isCompleted: false,
+        notes: "",
+        selectedCategory: ""
+      )
+    ]
+  )
+  .environmentObject(TaskStore())
+}
+
+
+struct AddTaskButton: View {
+  @State var isPresented = false
+  var body: some View {
+    Button(action: presentAddTaskMenu) {
+      Label("New Task", systemImage: "plus.circle.fill")
+        .fontWeight(.bold)
     }
+    .sheet(isPresented: $isPresented) {
+      AddTaskMenu()
+    }
+  }
+
+  func presentAddTaskMenu() {
+    isPresented.toggle()
+  }
 }

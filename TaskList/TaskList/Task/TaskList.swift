@@ -8,61 +8,35 @@
 import SwiftUI
 
 struct TaskList: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @Binding var filteredTasks: [Task]
-  @State private var searchText = ""
+  @Binding var tasks: [Task]
 
-    var body: some View {
-        List {
-              ForEach($filteredTasks) { $task in
-                  TaskListItem(task: $task)
-              }
-        }
-      }
-
+  var body: some View {
+    List($tasks) { $task in
+      TaskListItem(taskItem: $task)
+    }
+  }
+}
 
 struct TaskListItem: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @Binding var task: Task
+  @EnvironmentObject var taskStore: TaskStore
+  @Binding var taskItem: Task
 
-    var body: some View {
-        HStack {
-          ZStack(alignment: .leading) {
-            NavigationLink(destination: TaskDetail(task: $task)) {
-              HStack {
-                TaskRow(task: $task)
-                Spacer()
-              }
-
-            }
-          }
-          ZStack(alignment: .trailing) {
-            Button(action: {
-              taskStore.toggleTaskCompletion(taskID: task.id)
-            }) {
-              Image(systemName: task.isCompleted ? "checkmark.square" : "square")
-                .foregroundColor(task.isCompleted ? .green : .red)
-            }
-            .buttonStyle(PlainButtonStyle())
-          }
-
-        }
+  var body: some View {
+    HStack {
+      NavigationLink(destination: TaskDetail(task: $taskItem)) {
+        Text(taskItem.title)
+          .font(.title2.bold())
+          .frame(maxWidth: .infinity, alignment: .leading)
       }
+      Button(action: toggleTask) {
+        Image(systemName: taskItem.isCompleted ? "checkmark.square" : "square")
+          .foregroundColor(taskItem.isCompleted ? .green : .red)
+      }
+      .buttonStyle(.plain)
     }
+  }
+
+  func toggleTask() {
+    taskStore.toggleTaskCompletion(taskID: taskItem.id)
+  }
 }
-
-struct TaskList_Previews: PreviewProvider {
-    static var previews: some View {
-        let taskStore = TaskStore()
-        let tasks: [Task] = [
-            Task(id: UUID(), title: "Task 1", isCompleted: true, notes: "This is task 1", selectedCategory: "Personal"),
-            Task(id: UUID(), title: "Task 2", isCompleted: false, notes: "This is task 2", selectedCategory: "Work"),
-            Task(id: UUID(), title: "Task 3", isCompleted: false, notes: "This is task 3", selectedCategory: "Home")
-        ]
-        let filteredTasks = Binding.constant(tasks)
-
-        return TaskList(filteredTasks: filteredTasks)
-            .environmentObject(taskStore)
-    }
-}
-

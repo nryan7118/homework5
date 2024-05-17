@@ -9,15 +9,12 @@ import SwiftUI
 
 struct CategoryCardView: View {
   @EnvironmentObject var taskStore: TaskStore
-  @Binding var selectedCategory: String?
+  let category: String
 
-  var category: String
-  
   var badgeCount: Int {
     taskStore.tasks.filter { $0.selectedCategory == category }.count
   }
-  
-  
+
   var body: some View {
     VStack {
       Text(category)
@@ -37,12 +34,7 @@ struct CategoryCardView: View {
   }
 }
 
-
 #Preview {
-  CategoryCardView(selectedCategory: .constant("Home"), category: "Home")
+  CategoryCardView(category: "Home")
     .environmentObject(TaskStore())
 }
-
-
-
-
