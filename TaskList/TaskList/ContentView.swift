@@ -1,37 +1,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @State private var isPresented = false
-    @State var selectedCategory: String? = nil
-  @State var searchText = ""
-
-    var body: some View {
-        TabView {
-          AllTab(isPresented: $isPresented, selectedCategory: $selectedCategory)
-            .tabItem {
-              Image(systemName: "tray.full")
-              Text("All")
-            }
-            IncompleteTab(isPresented: $isPresented)
-                .tabItem {
-                    Image(systemName: "list.bullet.circle")
-                    Text("Tasks")
-                }
-            CompletedTab(isPresented: $isPresented)
-                .tabItem {
-                    Image(systemName: "checkmark.circle")
-                    Text("Completed")
-                }
-          
+  var body: some View {
+    TabView {
+      AllTab()
+        .tabItem {
+          Label("All", systemImage: "tray.full")
         }
-        .ignoresSafeArea()
+      IncompleteTab()
+        .tabItem {
+          Label("Tasks", systemImage: "list.bullet.circle")
+        }
+      CompletedTab()
+        .tabItem {
+          Label("Completed", systemImage: "checkmark.circle")
+        }
     }
+  }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(TaskStore())
-    }
+#Preview {
+  ContentView()
+    .environmentObject(TaskStore())
 }

@@ -8,32 +8,29 @@
 import SwiftUI
 
 struct AddTaskMenu: View {
-  static let defaultTaskTitle = "Give yourself a highfive!"
-  
   @EnvironmentObject var taskStore: TaskStore
-  
-  @Binding var isPresented: Bool
+
+  @Environment(\.dismiss) var dismiss
   @State var title = ""
   @State var notes = ""
   @State var selectedCategory = "No Category"
-  
+
   var isAddButtonDisabled: Bool {
     title.isEmpty
   }
-  
-  
+
   var body: some View {
-    NavigationView {
+    NavigationStack {
       Form {
-        Section(header: Text("Task Title")) {
+        Section("Task Title") {
           TextField("Title", text: $title)
         }
-        Section(header: Text("Notes")) {
+        Section("Notes") {
           TextEditor(text: $notes)
             .frame(minHeight: 100)
             .padding(.horizontal)
         }
-        Section(header: Text("Category")) {
+        Section("Category") {
           Picker("Category", selection: $selectedCategory) {
             ForEach(TaskStore.categories, id: \.self) { category in
               Text(category)
@@ -41,35 +38,36 @@ struct AddTaskMenu: View {
           }
           .pickerStyle(.wheel)
         }
-        
-        .navigationTitle(Text("Adding New Task"))
+        .navigationTitle("Adding New Task")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(
-          leading:
-            Button(action: {isPresented.toggle()}) {
-              Text("Cancel")
-            } ,
-          trailing:
-            Button(action: {
-              addTask()
-            }) {
-              Text("Add")
-            }
-            .disabled(isAddButtonDisabled)
-        )
-      }
+        .toolbar {
+          ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel", role: .destructive, action: { dismiss() })
+          }
+
+          ToolbarItem(placement: .confirmationAction) {
+            Button("Add", action: addTask)
+              .disabled(isAddButtonDisabled)
+          }
+        }
       }
     }
-  
+  }
+
   private func addTask() {
-      let newTask = Task(id: UUID(), title: title.isEmpty ? AddTaskMenu.defaultTaskTitle : title, isCompleted: false, notes: notes, selectedCategory: selectedCategory)
-      taskStore.addTask(newTask)
-      isPresented.toggle()
+    let newTask = Task(
+      id: UUID(),
+      title: title,
+      isCompleted: false,
+      notes: notes,
+      selectedCategory: selectedCategory
+    )
+    taskStore.addTask(newTask)
+    dismiss()
   }
 }
-  
+
 #Preview {
-  AddTaskMenu(isPresented: .constant(true))
+  AddTaskMenu()
     .environmentObject(TaskStore(tasks: TaskStore.defaultTasks))
 }
-

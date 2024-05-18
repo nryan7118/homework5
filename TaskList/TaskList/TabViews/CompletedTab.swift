@@ -7,43 +7,34 @@
 import SwiftUI
 
 struct CompletedTab: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @Binding var isPresented: Bool
-    @State private var filteredTasks: [Task] = []
+  @EnvironmentObject var taskStore: TaskStore
+  @State private var tasks: [Task] = []
 
-    var body: some View {
-        
-        NavigationView {
-              VStack {
-                  TaskList(filteredTasks: $filteredTasks)
-                      .onAppear {
-                          filteredTasks = taskStore.tasks.filter { $0.isCompleted }
-                      }
-                      .listStyle(GroupedListStyle())
-                      .toolbar {
-                          ToolbarItem(placement: .bottomBar) {
-                              Button(action: { isPresented.toggle() }) {
-                                  Image(systemName: "plus.circle.fill")
-                                  Text("New Task").fontWeight(.bold)
-                              }
-                          }
-                      }
-                      .background(ignoresSafeAreaEdges: .all)
-                Color(.white)
-                      .sheet(isPresented: $isPresented) {
-                          AddTaskMenu(isPresented: $isPresented)
-                      }
-              }
-              .navigationTitle("Completed Tasks")
+  var completedTasks: [Task] {
+    taskStore.tasks.filter { $0.isCompleted }
+  }
+
+  var body: some View {
+    NavigationStack {
+      TaskList(tasks: $tasks)
+        .listStyle(.grouped)
+        .toolbar {
+          ToolbarItem(placement: .primaryAction) {
+            AddTaskButton()
+          }
         }
-      }
+        .onAppear {
+          tasks = completedTasks
+        }
+        .onChange(of: completedTasks) { _, completedTasks in
+          tasks = completedTasks
+        }
+        .navigationTitle("Completed Tasks")
     }
-
-struct CompletedTab_Previews: PreviewProvider {
-    static var previews: some View {
-        let taskStore = TaskStore()
-        return CompletedTab(isPresented: .constant(false))
-            .environmentObject(taskStore)
-    }
+  }
 }
 
+#Preview {
+  CompletedTab()
+    .environmentObject(TaskStore())
+}

@@ -8,58 +8,54 @@
 import SwiftUI
 
 struct AllTab: View {
-    @EnvironmentObject var taskStore: TaskStore
-    @Binding var isPresented: Bool
-    @Binding var selectedCategory: String?
+  @EnvironmentObject var taskStore: TaskStore
+  @State var selectedCategory: String?
 
-    @State var searchText: String = ""
+  @State var tasks: [Task] = []
 
-    var body: some View {
-        ZStack {
-            Color.white.edgesIgnoringSafeArea(.all)
-            NavigationView {
-                VStack(spacing: 0) {
-                    SearchBar(text: $searchText)
-                        .padding(.top, 8)
-
-                  
-                    gridView(selectedCategory: $selectedCategory)
-                        .padding(.bottom, 15)
-
-                    ScrollViewReader { proxy in
-                      if selectedCategory != nil {
-                            SelectedCategory(selectedCategory: $selectedCategory)
-                                .scaledToFit()
-                        } else {
-                            TaskList(filteredTasks: .constant(taskStore.tasks))
-                        }
-                    }
-                    .background(Color.white) 
-                }
-                .navigationBarTitle("")
-                .toolbar {
-                    ToolbarItem(placement: .bottomBar) {
-                        Button(action: { isPresented.toggle() }) {
-                            Image(systemName: "plus.circle.fill")
-                            Text("New Task")
-                                .fontWeight(.bold)
-                        }
-                    }
-                }
-            }
-            .sheet(isPresented: $isPresented) {
-                AddTaskMenu(isPresented: $isPresented)
-            }
-        }
+  var filteredTasks: [Task] {
+    if let selectedCategory {
+      return taskStore.tasks.filter { $0.selectedCategory == selectedCategory }
+    } else {
+      return taskStore.tasks
     }
+  }
+
+  var body: some View {
+    NavigationStack {
+      List {
+        GridView(selectedCategory: $selectedCategory)
+          .listRowBackground(Color.clear)
+
+        ForEach($tasks) { $task in
+          TaskListItem(taskItem: $task)
+        }
+      }
+      .onAppear {
+        reloadTasks()
+      }
+      .onChange(of: taskStore.tasks) { _, _ in
+        reloadTasks()
+      }
+      .onChange(of: selectedCategory) { _, _ in
+        reloadTasks()
+      }
+      .listStyle(.plain)
+      .toolbar {
+        ToolbarItem(placement: .primaryAction) {
+          AddTaskButton()
+        }
+      }
+      .navigationTitle("All Tasks")
+    }
+  }
+
+  func reloadTasks() {
+    tasks = filteredTasks
+  }
 }
 
-struct AllTab_Previews: PreviewProvider {
-    static var previews: some View {
-        AllTab(
-            isPresented: .constant(false),
-            selectedCategory: .constant(nil)
-        )
-        .environmentObject(TaskStore())
-    }
+#Preview {
+  AllTab()
+    .environmentObject(TaskStore())
 }

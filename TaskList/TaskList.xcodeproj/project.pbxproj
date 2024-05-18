@@ -11,7 +11,7 @@
 		483156EB2BEE1D3000120D73 /* IncompleteTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483156EA2BEE1D3000120D73 /* IncompleteTab.swift */; };
 		483156ED2BEE305600120D73 /* CompletedTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483156EC2BEE305600120D73 /* CompletedTab.swift */; };
 		483156EF2BEF58E900120D73 /* AllTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483156EE2BEF58E900120D73 /* AllTab.swift */; };
-		483156F12BEF5E0800120D73 /* gridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483156F02BEF5E0800120D73 /* gridView.swift */; };
+		483156F12BEF5E0800120D73 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483156F02BEF5E0800120D73 /* GridView.swift */; };
 		4857C4442BE166590051981F /* TaskListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C4432BE166590051981F /* TaskListApp.swift */; };
 		4857C4462BE166590051981F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C4452BE166590051981F /* ContentView.swift */; };
 		4857C4482BE1665B0051981F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4857C4472BE1665B0051981F /* Assets.xcassets */; };
@@ -22,10 +22,8 @@
 		4857C46E2BE1683E0051981F /* AddTaskMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C46D2BE1683E0051981F /* AddTaskMenu.swift */; };
 		4857C4702BE168730051981F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C46F2BE168730051981F /* Task.swift */; };
 		4857C4722BE168840051981F /* TaskDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C4712BE168840051981F /* TaskDetail.swift */; };
-		4857C4742BE1B2450051981F /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C4732BE1B2450051981F /* TaskRow.swift */; };
 		4857C4762BE1B2600051981F /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857C4752BE1B2600051981F /* TaskStore.swift */; };
 		48AD79302BF0D4C4004C7AAD /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AD792F2BF0D4C4004C7AAD /* CategoryCardView.swift */; };
-		48B52F3D2BF2DB890093A106 /* SelectedCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B52F3C2BF2DB890093A106 /* SelectedCategory.swift */; };
 		48B52F3F2BF2E0950093A106 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B52F3E2BF2E0950093A106 /* TaskList.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +49,7 @@
 		483156EA2BEE1D3000120D73 /* IncompleteTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncompleteTab.swift; sourceTree = "<group>"; };
 		483156EC2BEE305600120D73 /* CompletedTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTab.swift; sourceTree = "<group>"; };
 		483156EE2BEF58E900120D73 /* AllTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTab.swift; sourceTree = "<group>"; };
-		483156F02BEF5E0800120D73 /* gridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gridView.swift; sourceTree = "<group>"; };
+		483156F02BEF5E0800120D73 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		4857C4402BE166590051981F /* TaskList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4857C4432BE166590051981F /* TaskListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListApp.swift; sourceTree = "<group>"; };
 		4857C4452BE166590051981F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,10 +63,8 @@
 		4857C46D2BE1683E0051981F /* AddTaskMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskMenu.swift; sourceTree = "<group>"; };
 		4857C46F2BE168730051981F /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4857C4712BE168840051981F /* TaskDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetail.swift; sourceTree = "<group>"; };
-		4857C4732BE1B2450051981F /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 		4857C4752BE1B2600051981F /* TaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStore.swift; sourceTree = "<group>"; };
 		48AD792F2BF0D4C4004C7AAD /* CategoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCardView.swift; sourceTree = "<group>"; };
-		48B52F3C2BF2DB890093A106 /* SelectedCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCategory.swift; sourceTree = "<group>"; };
 		48B52F3E2BF2E0950093A106 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,7 +116,6 @@
 		4857C4422BE166590051981F /* TaskList */ = {
 			isa = PBXGroup;
 			children = (
-				48B52F352BF0EAC00093A106 /* Category */,
 				48AD792E2BF0D479004C7AAD /* Grid */,
 				4857C4452BE166590051981F /* ContentView.swift */,
 				4857C4432BE166590051981F /* TaskListApp.swift */,
@@ -176,7 +171,6 @@
 				4857C4712BE168840051981F /* TaskDetail.swift */,
 				4857C46F2BE168730051981F /* Task.swift */,
 				4857C4752BE1B2600051981F /* TaskStore.swift */,
-				4857C4732BE1B2450051981F /* TaskRow.swift */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -185,17 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				48AD792F2BF0D4C4004C7AAD /* CategoryCardView.swift */,
-				483156F02BEF5E0800120D73 /* gridView.swift */,
+				483156F02BEF5E0800120D73 /* GridView.swift */,
 			);
 			path = Grid;
-			sourceTree = "<group>";
-		};
-		48B52F352BF0EAC00093A106 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				48B52F3C2BF2DB890093A106 /* SelectedCategory.swift */,
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,9 +321,7 @@
 				4809DC732BF641F000EDB2A5 /* SearchBar.swift in Sources */,
 				48AD79302BF0D4C4004C7AAD /* CategoryCardView.swift in Sources */,
 				48B52F3F2BF2E0950093A106 /* TaskList.swift in Sources */,
-				48B52F3D2BF2DB890093A106 /* SelectedCategory.swift in Sources */,
-				4857C4742BE1B2450051981F /* TaskRow.swift in Sources */,
-				483156F12BEF5E0800120D73 /* gridView.swift in Sources */,
+				483156F12BEF5E0800120D73 /* GridView.swift in Sources */,
 				4857C46E2BE1683E0051981F /* AddTaskMenu.swift in Sources */,
 				483156EF2BEF58E900120D73 /* AllTab.swift in Sources */,
 				4857C4442BE166590051981F /* TaskListApp.swift in Sources */,
