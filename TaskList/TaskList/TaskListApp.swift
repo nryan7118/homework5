@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct Task_ListApp: App {
-  let defaultTask = Task(id: UUID(), title: "Your Task Title", isCompleted: false, notes: "Your Task Notes")
+  @StateObject var store = TaskStore()
 
   var body: some Scene {
     WindowGroup {
       ContentView()
-      
+        .environmentObject(store)
     }
   }
 }

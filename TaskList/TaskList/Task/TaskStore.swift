@@ -16,12 +16,15 @@ class TaskStore: ObservableObject  {
   
   static let taskKey = "Task"
   static let defaultTasks = [
-    Task(id: UUID(), title: "Do Laundry", isCompleted: false, notes: "None"),
-    Task(id: UUID(), title: "Am Study Session", isCompleted: false, notes: "Stop between 7:15 and 7:30 for before work break"),
-    Task(id: UUID(), title: "Fill Water B4 Work", isCompleted: false, notes: "Aqua"),
-    Task(id: UUID(), title: "Let dogs out", isCompleted: false, notes: "Who let the dogs out?"),
-    Task(id: UUID(), title: "Mental High Five", isCompleted: false, notes: "Good Job!")
+    Task(id: UUID(), title: "Do Laundry", isCompleted: false, notes: "None", selectedCategory: "Home"),
+    Task(id: UUID(), title: "Am Study Session", isCompleted: false, notes: "Stop between 7:15 and 7:30 for before work break", selectedCategory: "School"),
+    Task(id: UUID(), title: "Fill Water B4 Work", isCompleted: false, notes: "Aqua", selectedCategory: "Personal"),
+    Task(id: UUID(), title: "Let dogs out", isCompleted: false, notes: "Who let the dogs out?", selectedCategory: "Home"),
+    Task(id: UUID(), title: "Mental High Five", isCompleted: false, notes: "Good Job!", selectedCategory: "No Category")
   ]
+  
+  static let categories: [String] = ["Personal",  "Work", "Home", "No Category"]
+
   
   static func loadTasks() -> [Task] {
     guard let savedTasksData = UserDefaults.standard.object(forKey: TaskStore.taskKey) as? Data else {
@@ -41,9 +44,8 @@ class TaskStore: ObservableObject  {
     self.tasks = TaskStore.loadTasks()
   }
   
-  func addTask(title: String, isCompleted: Bool, notes: String) {
-    let newTask = Task(id: UUID(), title: title, isCompleted: isCompleted, notes: notes)
-    tasks.append(newTask)
+  func addTask(_ task: Task) {
+    tasks.append(task)
     persistTasks()
     
   }

@@ -7,12 +7,11 @@
 
 import Foundation
 
-struct Task: Identifiable, Codable, Hashable {
+struct Task: Identifiable, Codable, Hashable{
   var id: UUID
   var title: String
   var isCompleted: Bool
   var notes: String
+  var selectedCategory: String
 }
-
-
 
