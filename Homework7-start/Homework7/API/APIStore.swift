@@ -37,28 +37,62 @@ class APIStore: ObservableObject {
   
   let apiJSONURL = URL(fileURLWithPath: "apilist", relativeTo: FileManager.documentsDirectoryURL).appendingPathExtension("json")
   
-  @Published var apiEntries: [API] = [] 
+  @Published var apiEntries: [API] = []
 
   
   init() {
+    if !FileManager.default.fileExists(atPath: apiJSONURL.path) {
+      copyJSONToDocumentsDirectory()
+    }
     loadJSON()
   }
   
  private func loadJSON() {
-   guard let url = Bundle.main.url(forResource: "apilist", withExtension: "json") else {
-     print("JSON file not found")
+   let url: URL
+   
+   if let bundleURL = Bundle.main.url(forResource: "apilist", withExtension: "json") {
+     url = bundleURL
+   }
+   
+   else if FileManager.default.fileExists(atPath: apiJSONURL.path) {
+     url = apiJSONURL
+   } else {
+     print("Failed to find JSON file in both bundle and documents directory")
      return
    }
-    
-    let decoder = JSONDecoder()
+   
+   let decoder = JSONDecoder()
+   
+   do {
+     let apiData = try Data(contentsOf: url)
+     let apiResponse = try decoder.decode(APIResponse.self, from: apiData)
+     self.apiEntries = apiResponse.entries
+   } catch {
+     print("Failed to decode JSON: \(error)")
+   }
+  }
+  
+  private func copyJSONToDocumentsDirectory() {
+    guard let bundleURL = Bundle.main.url(forResource: "apilist", withExtension: "json") else {
+      print("Failed to find JSON file in the bundle.")
+      return
+    }
     
     do {
-      let apiData = try Data(contentsOf: url)
-      let apiResponse = try decoder.decode(APIResponse.self, from: apiData)
-      self.apiEntries = apiResponse.entries
+      let data = try Data(contentsOf: bundleURL)
+      try data.write(to: apiJSONURL)
+      print("Copied JSON file from bundle to documents directory.")
+      loadJSON()
+     // saveAPIData()
     } catch {
-      print("Failed to decode JSON: \(error)")
+      print("Falied to copy JSON file: \(error)")
     }
+  }
+  
+  
+  func addEntry(_ entry: API) {
+    apiEntries.append(entry)
+    saveAPIData()
   }
   
 func saveAPIData() {

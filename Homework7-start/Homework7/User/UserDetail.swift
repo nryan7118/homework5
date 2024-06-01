@@ -36,26 +36,14 @@ struct UserDetail: View {
   let user: User
   
   var body: some View {
-    //   VStack {
-//    VStack {
-//      Text("User Info")
-//        .font(.largeTitle)
-//        .fontWeight(.bold)
-//      
-//      //.padding(.bottom, 20)
-//      //     }
-//      
-      
-      NavigationView {
+      NavigationStack {
           VStack {
             List {
               Section (header: Text("Personal Information")) {
                 VStack(alignment: .leading) {
-                  HStack {
-                    Text("Name: ")
-                      .font(.headline)
-                    Text("\(user.name.title) \(user.name.first) \(user.name.last)")
-                  }
+                  
+                    LabeledContent("Name", value: String("\(user.name.title), \(user.name.first), \(user.name.last)"))
+                  
                   HStack {
                     Text("Date of Birth:")
                       .font(.headline)

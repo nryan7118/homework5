@@ -39,16 +39,24 @@ struct APIResponse: Codable {
 
 struct API: Codable, Identifiable {
   let id = UUID()
-  var API: String
-  var Description: String
-  var Auth: String
-  var HTTPS: Bool
-  var Cors: String
-  var Link: String
-  var Category: String
-}
-
+  var api: String
+  var description: String
+  var auth: String
+  var https: Bool
+  var cors: String
+  var link: URL
+  var category: String
   
-
+  private enum CodingKeys: String, CodingKey {
+    case api = "API"
+    case description = "Description"
+    case auth = "Auth"
+    case https = "HTTPS"
+    case cors = "Cors"
+    case link = "Link"
+    case category = "Category"
+  
+  }
+}
 
 
