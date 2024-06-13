@@ -1,15 +1,15 @@
 /// Copyright (c) 2024 Kodeco Inc.
-/// 
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
 /// This project and source code may use libraries or frameworks that are
 /// released under various Open-Source licenses. Use of those libraries and
 /// frameworks are governed by their own individual licenses.
@@ -35,163 +35,59 @@ import SwiftUI
 struct UserDetail: View {
   let user: User
   
+  
   var body: some View {
-    //   VStack {
-//    VStack {
-//      Text("User Info")
-//        .font(.largeTitle)
-//        .fontWeight(.bold)
-//      
-//      //.padding(.bottom, 20)
-//      //     }
-//      
-      
-      NavigationView {
-          VStack {
-            List {
-              Section (header: Text("Personal Information")) {
-                VStack(alignment: .leading) {
-                  HStack {
-                    Text("Name: ")
-                      .font(.headline)
-                    Text("\(user.name.title) \(user.name.first) \(user.name.last)")
-                  }
-                  HStack {
-                    Text("Date of Birth:")
-                      .font(.headline)
-                    Text("\(formattedDate(from: user.dob.date))")
-                    
-                    Text("Age: ")
-                      .font(.headline)
-                    Text("\(user.dob.age)")
-                  }
-                }
-              }
-              Section (header: Text("Location")) {
-                HStack(alignment: .top) {
-                  Text("Address: ")
-                    .font(.headline)
-                  VStack (alignment: .leading){
-                    Text("\( String(user.location.street.number)) \(user.location.street.name) \n\(user.location.city) \(user.location.state) \(String(user.location.postcode))")
-                  }
-                }
-              }
-              Section(header: Text("Coordinates")) {
-                VStack(alignment: .leading){
-                  HStack {
-                    Text("Lattitude: ")
-                      .font(.headline)
-                    Text("\(user.location.coordinates.latitude)")
-                  }
-                  HStack {
-                    Text("Longitude")
-                      .font(.headline)
-                    Text(user.location.coordinates.longitude)
-                  }
-                }
-              }
-              Section (header: Text("Timezone")) {
-                HStack {
-                  Text("Offset: ")
-                    .font(.headline)
-                  Text(user.location.timezone.offset)
-                }
-                HStack {
-                  Text("Description: ")
-                    .font(.headline)
-                  Text(user.location.timezone.description)
-                }
-              }
-              Section(header: Text("Contact")) {
-                VStack(alignment: .leading) {
-                  HStack {
-                    Text("Phone:")
-                      .font(.headline)
-                    Text(user.phone)
-                  }
-                  HStack {
-                    Text("Cell: ")
-                      .font(.headline)
-                    Text(user.cell)
-                  }
-                  HStack {
-                    Text("Email: ")
-                      .font(.headline)
-                    Text(user.email)
-                  }
-                }
-              }
-              Section (header: Text("Login Information")) {
-                HStack(alignment: .top) {
-                  Text("UUID: ")
-                    .font(.headline)
-                  VStack {
-                    Text(user.login.uuid)
-                  }
-                }
-                HStack {
-                  Text("Username: ")
-                    .font(.headline)
-                  Text(user.login.username)
-                }
-                HStack {
-                  Text("Password: ")
-                    .font(.headline)
-                  SecurePassword(password: user.login.password)
-                }
-                HStack {
-                  Text("salt: ")
-                    .font(.headline)
-                  Text(user.login.salt)
-                }
-                HStack {
-                  Text("md5: ")
-                    .font(.headline)
-                  Text(user.login.md5)
-                }
-                HStack {
-                  Text("sha1: ")
-                  Text(user.login.sha1)
-                }
-                HStack {
-                  Text("sha256: ")
-                  Text(user.login.sha256)
-                }
-              }
-            }
-          }
-          .navigationTitle("User Info")
+    NavigationStack {
+      List {
+        Section(header: Text("Personal Information")) {
+          SectionView(title: "Name", value: ("\(user.name.title), \(user.name.first), \(user.name.last)"))
+          SectionView(title:"Date of Birth", value: String("\(formattedDate(from: user.dob.date))"))
+          SectionView(title: "Age", value: ("\(user.dob.age)"))
+        }
+        Section(header: Text("Location")) {
+          SectionView(title: "Address", value: "\(user.location.street.number) \(user.location.street.name), \(user.location.city) \(user.location.state) \(user.location.postcode)")
+        }
+        Section(header: Text("Coordinates")) {
+          SectionView(title: "Latitude", value:("\(user.location.coordinates.latitude)"))
+          SectionView(title: "Longitude", value: ("\(user.location.coordinates.longitude)"))
+        }
+        Section(header: Text("Timezone")) {
+          SectionView(title: "Offset", value: user.location.timezone.offset)
+          SectionView(title: "Description", value: user.location.timezone.description)
+        }
+        Section(header: Text("Contact")) {
+          SectionView(title: "Phone", value: user.phone)
+          SectionView(title: "Cell", value: user.cell)
+          SectionView(title: "Email", value: user.email)
+        }
+        Section(header: Text("Login Information")) {
+          SectionView(title: "UUID", value: user.login.uuid)
+          SectionView(title: "Username", value: user.login.username)
+          SectionView(title: "Password", value: "******")
+          SectionView(title: "Salt", value: user.login.salt)
+          SectionView(title: "MD5", value: user.login.md5)
+          SectionView(title: "SHA1", value: user.login.sha1)
+          SectionView(title: "SHA256", value: user.login.sha256)
         }
       }
-    
-  
-  func formattedDate(from dateString: String) -> String {
-    let isoFormatter = ISO8601DateFormatter()
-    isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-    
-    
-    if let date = isoFormatter.date(from: dateString) {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateStyle = .medium
-      dateFormatter.timeStyle = .none
-      return dateFormatter.string(from: date)
-    } else {
-      return dateString
-    }
-  }
-  
-  struct SecurePassword: View {
-    let password: String
-    
-    var body: some View {
-      HStack {
-        ForEach(0..<password.count, id: \.self) { _ in
-          Image(systemName: "circle.fill")
-            .foregroundColor(.secondary)
-        }
-        
-      }
+      .navigationTitle("User Info")
     }
   }
 }
+
+func formattedDate(from dateString: String) -> String {
+  let isoFormatter = ISO8601DateFormatter()
+  isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+  
+  if let date = isoFormatter.date(from: dateString) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = .medium
+    dateFormatter.timeStyle = .none
+    return dateFormatter.string(from: date)
+  } else {
+    return dateString
+  }
+}
+
+
 

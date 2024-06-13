@@ -33,34 +33,32 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject var apiStore = APIStore()
-  @ObservedObject var userStore = UserStore()
+  @StateObject var apiStore = APIStore()
+  @StateObject var userStore = UserStore()
   
   
   var body: some View {
     TabView {
-      NavigationView {
-        List {
-          ForEach(apiStore.apiEntries) { api in
-            NavigationLink(destination: APIDetailView(entry: api)){
-              Text(api.API)
+      NavigationStack {
+        List (apiStore.apiEntries) { api in
+            NavigationLink(destination: APIDetailView(entry: api)) {
+              Text(api.api)
             }
-          }
-          .navigationTitle("APIs")
         }
+        .navigationTitle("APIs")
       }
         .tabItem {
           Label("APIs", systemImage: "list.dash")
         }
       
-        NavigationView {
-          if let firstUser = userStore.userInfo.first {
-            UserDetail(user: firstUser)
-              .navigationTitle("User Info")
-          }
+      if let firstUser = userStore.userInfo.first {
+        NavigationStack {
+          UserDetail(user: firstUser)
         }
+        .navigationTitle("User Info")
         .tabItem {
           Label("User", systemImage: "person.3.fill")
+        }
       }
     }
   }

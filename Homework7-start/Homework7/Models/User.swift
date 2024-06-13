@@ -61,9 +61,7 @@ struct User: Codable, Identifiable {
     self.cell = cell
     self.picture = picture
     self.nat = nat
-   // self.idInfo = idInfo idInfo
   }
-  
   
   struct Name: Codable {
     let title: String
@@ -116,12 +114,6 @@ struct User: Codable, Identifiable {
     let medium: String
     let thumbnail: String
   }
-  
-//  struct IDInfo: Codable {
-//       let name: String
-//       let value: String?
-//   }
-
 }
   
   struct Info: Codable {
@@ -130,9 +122,3 @@ struct User: Codable, Identifiable {
     let page: Int
     let version: String
   }
-  
-
-
-
-
-

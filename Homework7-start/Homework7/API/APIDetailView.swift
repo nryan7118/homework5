@@ -36,59 +36,32 @@ struct APIDetailView: View {
   let entry: API
   
   var body: some View {
-      VStack(alignment: .leading, spacing: 12.0) {
-        HStack() {
-          Text("API Entry")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-          
-        }
-        HStack {
-          Text("API: ")
+    NavigationStack {
+      VStack(alignment: .leading, spacing: 16.0) {
+        LabeledContent("API", value:entry.api )
             .fontWeight(.semibold)
-          Text(entry.API)
-        }
-        HStack {
-          Text("Description: ")
+        LabeledContent("Description", value: entry.description)
             .fontWeight(.semibold)
-          Text(entry.Description)
-        }
-        HStack {
-          Text("Auth: ")
+        LabeledContent("Auth", value: entry.auth.isEmpty ? "None" : entry.auth)
             .fontWeight(.semibold)
-          Text(entry.Auth.isEmpty ? "None" : entry.Auth)
-        }
-        HStack {
-          Text("HTTPS: ")
+        LabeledContent("HTTPS", value: entry.https ? "Yes" : "No")
             .fontWeight(.semibold)
-          Text(entry.HTTPS ? "Yes" : "No")
-        }
-        HStack {
-          Text("Cors: ")
+        LabeledContent("Cors", value: entry.cors.capitalized)
             .fontWeight(.semibold)
-          Text(entry.Cors)
-        }
-        HStack {
-          Text("Category: ")
+        LabeledContent("Category", value: entry.category)
             .fontWeight(.semibold)
-          Text(entry.Category)
-        }
-        if let url = URL(string: entry.Link) {
-          Link("API Link", destination: url)
-            .foregroundColor(.blue)
-        } else {
-          Text("Invalid URL")
-            .foregroundStyle(.red)
-        }
+        Link("Opan API Document", destination: entry.link)
+        
       }
-      .padding(.horizontal, 25.0)
+      .padding(.horizontal, 24.0)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-      
+    }
+    .navigationTitle("API Entry")
     }
 }
 
 #Preview {
   NavigationView {
-    APIDetailView(entry: API(API: "Testing", Description: "Testing", Auth: "apiKey", HTTPS: true, Cors: "yes", Link: "https://example.com", Category: "testing"))
+    APIDetailView(entry: API(api: "Testing", description: "Testing", auth: "apiKey", https: true, cors: "yes", link: URL(string: "https://example.com")!, category: "testing"))
   }
 }
